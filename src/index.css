@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  40% { transform: rotate(14deg); }
+  50% { transform: rotate(-4deg); }
+  60% { transform: rotate(10deg); }
+  70% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wave {
+  display: inline-block;
+  animation: wave 1.5s infinite;
+  transform-origin: 70% 70%;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-bg {
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0ea5e9, #6366f1);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+}
+.skill-card {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.08);
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(59, 130, 246, 0.2);
+}
