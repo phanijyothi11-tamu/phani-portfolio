@@ -52,7 +52,7 @@ export default function App() {
     title: "Texas A&M University — Student Full-stack Developer",
     subtitle: "Dept. of Kinesiology & Sports Management | College Station, TX",
     duration: "Sep 2025 – Present",
-    logo: "src/logos/tamu.png",
+    logo: "/logos/tamu.png",
     details: [
       "Contributing to sspain.ai, a sports analytics platform serving NBA, WNBA, and Dallas Mavericks.",
       "Developing responsive UIs using React, Next.js, Tailwind, and ShadUI.",
@@ -65,7 +65,7 @@ export default function App() {
     title: "Infosys — Digital Specialist Engineer",
     subtitle: "Hyderabad, India",
     duration: "Apr 2022 – Aug 2024",
-    logo: "src/logos/infy.png",
+    logo: "/logos/infy.png",
     details: [
       "Supported a UK-based telecom client in cloud migration using microservices architecture.",
       "Performed Linux operations and server troubleshooting within SDLC workflows.",
@@ -78,7 +78,7 @@ export default function App() {
     title: "Cognizant — Programmer Analyst Trainee",
     subtitle: "Hyderabad, India",
     duration: "Mar 2021 – Mar 2022",
-    logo: "src/logos/cts.png",
+    logo: "/logos/cts.png",
     details: [
       "Monitored large-scale telecom networks for a US-based client.",
       "Developed Python-based diagnostic scripts for network analysis.",
@@ -90,7 +90,7 @@ export default function App() {
     title: "DRDL (DRDO) — Software Engineer Intern",
     subtitle: "Independent Verification & Validation Lab | Hyderabad, India",
     duration: "May 2019 – Sep 2020",
-    logo: "src/logos/drdl.png",
+    logo: "/logos/drdl.png",
     details: [
       "Built a UDP-based satellite communication simulation using C++ and OMNeT++.",
       "Simulated real-time ground-to-satellite communication systems.",
@@ -540,7 +540,7 @@ export default function App() {
         gpa: "CGPA: 3.8 / 4.0",
         duration: "Aug 2024 – May 2026",
         location: "College Station, TX",
-        logo: "src/logos/tamu.png",
+        logo: "/logos/tamu.png",
       },
       {
         school: "Jawaharlal Nehru Technological University",
@@ -548,7 +548,7 @@ export default function App() {
         gpa: "CGPA: 9.3 / 10",
         duration: "Aug 2016 – Sep 2020",
         location: "Hyderabad, India",
-        logo: "src/logos/jntu.png",
+        logo: "/logos/jntu.png",
       },
     ].map((edu, i) => (
       <motion.div
