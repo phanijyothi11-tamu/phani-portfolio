@@ -10,7 +10,61 @@ export default function App() {
   const [entered, setEntered] = useState(false);
   const [init, setInit] = useState(false);
   const scrollRef = useRef(null);
+ 
   const [activeIndex, setActiveIndex] = useState(null);
+  const [activeSection, setActiveSection] = useState("about");
+
+  const aboutRef = useRef(null);
+  const experienceRef = useRef(null);
+  const projectsRef = useRef(null);
+  const skillsRef = useRef(null);
+  const educationRef = useRef(null);
+  const contactRef = useRef(null);
+ useEffect(() => {
+  if (!entered || !scrollRef.current) return;
+
+  const sections = [
+    { id: "about", ref: aboutRef },
+    { id: "experience", ref: experienceRef },
+    { id: "projects", ref: projectsRef },
+    { id: "skills", ref: skillsRef },
+    { id: "education", ref: educationRef },
+    { id: "contact", ref: contactRef },
+  ];
+
+  const handleScroll = () => {
+  const scrollTop = scrollRef.current.scrollTop;
+  const scrollHeight = scrollRef.current.scrollHeight;
+  const clientHeight = scrollRef.current.clientHeight;
+
+  // ✅ if user reached bottom → force CONTACT active
+  if (scrollTop + clientHeight >= scrollHeight - 50) {
+    setActiveSection("contact");
+    return;
+  }
+
+  let current = "about";
+
+  sections.forEach((section) => {
+    if (section.ref.current) {
+      const offsetTop = section.ref.current.offsetTop;
+
+      if (scrollTop >= offsetTop - 200) {
+        current = section.id;
+      }
+    }
+  });
+
+  setActiveSection(current);
+};
+
+  const container = scrollRef.current;
+  container.addEventListener("scroll", handleScroll);
+
+  return () => container.removeEventListener("scroll", handleScroll);
+}, [entered]);
+
+ 
   // 🔥 PARTICLES INIT
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -105,6 +159,7 @@ export default function App() {
         dark ? "bg-gray-950 text-white" : "bg-white text-black"
       }`}
     >
+      
       {/* 🌌 PARTICLES (ALWAYS ON) */}
       {init && (
         <Particles
@@ -197,20 +252,79 @@ export default function App() {
         ref={scrollRef}
         className="absolute inset-0 z-20 overflow-y-auto"
       >
+        {/* 🔥 LEFT FIXED NAV */}
+{entered && (
+  <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
+
+    {[
+      { id: "about", label: "About", ref: aboutRef },
+      { id: "experience", label: "Experience", ref: experienceRef },
+      { id: "projects", label: "Projects", ref: projectsRef },
+      { id: "skills", label: "Skills", ref: skillsRef },
+      { id: "education", label: "Education", ref: educationRef },
+      { id: "contact", label: "Contact", ref: contactRef },
+    ].map((item, i) => (
+      <button
+        key={i}
+        onClick={() =>
+          scrollRef.current.scrollTo({
+            top: item.ref.current.offsetTop,
+            behavior: "smooth",
+})
+        }
+        className="flex items-center gap-3 group"
+      >
+        {/* DOT */}
+        <div
+          className={`w-3 h-3 rounded-full transition ${
+            activeSection === item.id
+              ? "bg-blue-400 scale-125"
+              : "bg-gray-600 group-hover:bg-white"
+          }`}
+        />
+
+        {/* TEXT */}
+        <span
+          className={`text-sm transition ${
+            activeSection === item.id
+              ? "text-blue-400"
+              : "text-gray-500 group-hover:text-white"
+          }`}
+        >
+          {item.label}
+        </span>
+      </button>
+    ))}
+
+  </div>
+)}
+     
+      
         {/* NAVBAR */}
-        <nav className="flex justify-between items-center px-8 py-4 backdrop-blur-md sticky top-0 z-30">
-          <h1 className="text-xl text-blue-400 font-bold">Welcome to Phani's World!</h1>
-          <a
-  href="/resume.pdf"
-  download
-  className="px-4 py-2 border border-blue-400 text-blue-400 rounded-lg hover:bg-blue-400 hover:text-black transition duration-300"
->
-  Download Resume
-</a>
-        </nav>
+       <nav className="flex justify-between items-center px-8 py-4 backdrop-blur-md sticky top-0 z-30">
+
+  {/* LEFT SIDE (hamburger + title) */}
+  <div className="flex items-center gap-4">
+
+
+    <h1 className="text-xl text-blue-400 font-bold">
+      Welcome to Phani's World!
+    </h1>
+  </div>
+
+  {/* RIGHT SIDE */}
+  <a
+    href="/resume.pdf"
+    download
+    className="px-4 py-2 border border-blue-400 text-blue-400 rounded-lg hover:bg-blue-400 hover:text-black transition duration-300"
+  >
+    Download Resume
+  </a>
+
+</nav>
 
         {/* ABOUT */}
-        <section className="max-w-5xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-10">
+        <section ref={aboutRef} className="max-w-5xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-10">
 
   {/* PHOTO */}
   <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-blue-400 shadow-[0_0_30px_rgba(56,189,248,0.4)]">
@@ -235,7 +349,7 @@ export default function App() {
  
 
         {/* EXPERIENCE */}
-        <section className="px-6 py-16">
+        <section ref={experienceRef} className="px-6 py-16">
   <h2 className="text-3xl text-center text-blue-400 mb-10">
     Experience(s)
   </h2>
@@ -313,7 +427,7 @@ export default function App() {
 </section>
 {/* PROJECTS */}
 
-<section className="px-6 py-20 relative z-10">
+<section ref={projectsRef} className="px-6 py-20 relative z-10">
   <h2 className="text-3xl text-center text-blue-400 mb-12">
     Project(s)
   </h2>
@@ -418,7 +532,7 @@ export default function App() {
   </div>
 </section>
 {/* SKILLS */}
-<section className="px-6 py-20 bg-transparent relative z-10">
+<section ref={skillsRef} className="px-6 py-20 bg-transparent relative z-10">
   <h2 className="text-3xl text-center text-blue-400 mb-12">
     Skill(s)
   </h2>
@@ -526,7 +640,7 @@ export default function App() {
   </div>
 </section>
 {/* EDUCATION */}
-<section className="px-6 py-20 relative z-10">
+<section  ref={educationRef} className="px-6 py-20 relative z-10">
   <h2 className="text-3xl text-center text-blue-400 mb-12">
     Education
   </h2>
@@ -595,7 +709,7 @@ export default function App() {
 
   </div>
 </section>
-<section className="px-6 py-20 text-center relative z-10">
+<section ref={contactRef} className="px-6 py-20 text-center relative z-10">
   <h2 className="text-3xl text-blue-400 mb-10">
     Wanna Reach Out?
   </h2>
