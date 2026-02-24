@@ -215,7 +215,7 @@ export default function App() {
   {/* PHOTO */}
   <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-blue-400 shadow-[0_0_30px_rgba(56,189,248,0.4)]">
     <img
-      src="src/profile.png"
+      src="/logos/profile.png"
       className="w-full h-full object-cover"
     />
   </div>
